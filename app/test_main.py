@@ -7,7 +7,7 @@ from app.main import outdated_products
 
 
 @pytest.fixture
-def sample_products():
+def sample_products() -> list[dict]:
     """
     Fixture that provides a sample list of products for testing.
     """
@@ -30,7 +30,7 @@ def sample_products():
     ]
 
 
-@patch('app.main.datetime.date')
+@patch("app.main.datetime.date")
 def test_outdated_products_today_is_2nd_feb(
     mock_date: patch,
     sample_products: list[dict]
@@ -39,14 +39,14 @@ def test_outdated_products_today_is_2nd_feb(
     Test that products expired by 2nd Feb are correctly identified.
     """
     mock_date.today.return_value = date(2022, 2, 2)
-    expected = ['duck']
+    expected = ["duck"]
     assert outdated_products(sample_products) == expected, (
         f"Expected {expected}, but got {outdated_products(sample_products)} "
         f"for date {mock_date.today.return_value}"
     )
 
 
-@patch('app.main.datetime.date')
+@patch("app.main.datetime.date")
 def test_outdated_products_today_is_6th_feb(
     mock_date: patch,
     sample_products: list[dict]
@@ -55,14 +55,14 @@ def test_outdated_products_today_is_6th_feb(
     Test that products expired by 6th Feb are correctly identified.
     """
     mock_date.today.return_value = date(2022, 2, 6)
-    expected = ['chicken', 'duck']
+    expected = ["chicken", "duck"]
     assert outdated_products(sample_products) == expected, (
         f"Expected {expected}, but got {outdated_products(sample_products)} "
         f"for date {mock_date.today.return_value}"
     )
 
 
-@patch('app.main.datetime.date')
+@patch("app.main.datetime.date")
 def test_outdated_products_today_is_11th_feb(
     mock_date: patch,
     sample_products: list[dict]
@@ -71,14 +71,14 @@ def test_outdated_products_today_is_11th_feb(
     Test that products expired by 11th Feb are correctly identified.
     """
     mock_date.today.return_value = date(2022, 2, 11)
-    expected = ['salmon', 'chicken', 'duck']
+    expected = ["salmon", "chicken", "duck"]
     assert outdated_products(sample_products) == expected, (
         f"Expected {expected}, but got {outdated_products(sample_products)} "
         f"for date {mock_date.today.return_value}"
     )
 
 
-@patch('app.main.datetime.date')
+@patch("app.main.datetime.date")
 def test_outdated_products_today_is_1st_feb(
     mock_date: patch,
     sample_products: list[dict]
